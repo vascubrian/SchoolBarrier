@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="/static/style.css" type="text/css">
+{% block body %}
+<div id="main_body">
+<h1 class="my_headers">TESTING PYTHON APP-FIRST PROJECT</hi>
+<div id="container">    
+<div id="left_body">
+ <ul id="nav_menu">
+<li><a href="{{ url_for('add_user', my_var='add_user') }}">Add New User</a></li>    
+<li><a href="">Manage User</a></li>      
+ <li><a href="/logout">Logout {% print session['user_name'] %}</a></li>     
+</ul>   
+</div>
+<div id="right_body">
+{{my_var}}
+</div>   
+</div>
+ <div id="bottom_layer">  
+ <p style="font-size:14px;padding:50px; ">@tb 2018</p>  
+ </div> 
+</div>
+{% endblock %}
