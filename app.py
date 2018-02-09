@@ -1,9 +1,17 @@
 from flask import Flask
+from models import db
 from flask import Flask, flash, redirect, render_template, request, session, abort
 import os
- 
+
 app = Flask(__name__)
- 
+
+
+app.config['DEBUG'] = True
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://barrier_db:123@localhost:5432/barrier_db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db.init_app(app)
+
+
 @app.route('/')
 def home():
     if not session.get('logged_in'):
@@ -13,6 +21,7 @@ def home():
  
 @app.route('/login', methods=['POST'])
 def do_admin_login():
+
     if request.form['password'] == 'password' and request.form['username'] == 'admin':
         session['logged_in'] = True
     else:
