@@ -1,5 +1,6 @@
 from flask import Flask
 from models import db
+from models import UserLogin
 from flask import Flask, flash, redirect, render_template, request, session, abort
 import os
 
@@ -21,10 +22,14 @@ def home():
  
 @app.route('/login', methods=['POST'])
 def do_admin_login():
-
-    if request.form['password'] == 'password' and request.form['username'] == 'admin':
+    #checking whether user exists................................
+    my_user=db.session.query(UserLogin).filter_by(vc_user_name=request.form['username'],vc_pass_word=request.form['password']).first()
+    if my_user is not None:
+        #success login.................
         session['logged_in'] = True
+        session['user_name'] =my_user.vc_user_name
     else:
+        #invalid login.................
         flash('wrong password!')
     return home()
 
