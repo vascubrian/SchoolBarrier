@@ -74,5 +74,9 @@ box-shadow: none;
   font-size: 12px;
   color: #444;
   display: block;
-	margin-top: 12px;
+  margin-top: 12px;
+}
+.app-title h1{
+font-size:16px;
+padding:20px 0px 20px 0px;    
 }

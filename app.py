@@ -1,6 +1,5 @@
 from flask import Flask
-from models import db
-from models import UserLogin
+from models import db,UserLogin
 from flask import Flask, flash, redirect, render_template, request, session, abort
 import os
 
@@ -35,9 +34,9 @@ def do_admin_login():
 
 @app.route("/logout")
 def logout():
+    #logout user
     session['logged_in'] = False
-    return home()
-
+    return home() 
  
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
