@@ -42,3 +42,27 @@ class UserLogin(BaseModel, db.Model):
         self.vc_pass_word=vc_pass_word
         self.vc_user_email=vc_user_email
         self.vc_user_type=vc_user_type
+
+class DbBarrier(BaseModel, db.Model):
+    """Model for the dt_barrier table"""
+    __tablename__ = 'dt_barrier'
+
+    nu_trans_id = db.Column(db.Integer, primary_key = True)
+    dt_trans_date = db.Column(db.TIMESTAMP)
+    nu_phone_no = db.Column(db.Integer)
+    vc_remind =db.column(db.String)
+    tm_realtime=db.column(db.TIMESTAMP)
+    def __init__(self,nu_trans_id,dt_trans_date,nu_phone_no,vc_remind,tm_realtime):
+        self.nu_trans_id=nu_trans_id
+        self.dt_trans_date=dt_trans_date
+        self.nu_phone_no=nu_phone_no
+        self.vc_remind=vc_remind
+        self.tm_realtime=tm_realtime
+
+
+
+
+	
+
+
+
