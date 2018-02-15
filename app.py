@@ -38,7 +38,7 @@ def logout():
     #logout user
     session['logged_in'] = False
     return home() 
-#receivind data to end point
+#received data to end point
 @app.route('/receive_remind', methods=['GET', 'POST'])
 def receive_remind():
     if request.method == 'POST':
