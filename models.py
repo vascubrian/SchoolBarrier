@@ -10,12 +10,12 @@ class BaseModel(db.Model):
     def __init__(self, *args):
         super().__init__(*args)
 
-    def __repr__(self):
-        """Define a base way to print models"""
-        return '%s(%s)' % (self.__class__.__name__, {
-            column: value
-            for column, value in self._to_dict().items()
-        })
+    # def __repr__(self):
+    #     """Define a base way to print models"""
+    #     return '%s(%s)' % (self.__class__.__name__, {
+    #         column: value
+    #         for column, value in self._to_dict().items()
+    #     })
 
     def json(self):
         """
@@ -48,16 +48,16 @@ class DbBarrier(BaseModel, db.Model):
     __tablename__ = 'dt_barrier'
 
     nu_trans_id = db.Column(db.Integer, primary_key = True)
-    dt_trans_date = db.Column(db.TIMESTAMP)
+    dt_trans_date = db.Column(db.DateTime)
     nu_phone_no = db.Column(db.Integer)
     vc_remind =db.column(db.String)
-    tm_realtime=db.column(db.TIMESTAMP)
-    def __init__(self,nu_trans_id,dt_trans_date,nu_phone_no,vc_remind,tm_realtime):
-        self.nu_trans_id=nu_trans_id
+    tm_realtime=db.column(db.DateTime)
+    def __init__(self,dt_trans_date,nu_phone_no,vc_remind,tm_realtime):
         self.dt_trans_date=dt_trans_date
         self.nu_phone_no=nu_phone_no
         self.vc_remind=vc_remind
         self.tm_realtime=tm_realtime
+
 
 
 

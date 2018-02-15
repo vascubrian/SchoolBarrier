@@ -1,7 +1,8 @@
 from flask import Flask
-from models import db,UserLogin
+from models import db,UserLogin,DbBarrier
 from flask import Flask, flash, redirect, render_template, request, session, abort
 import os
+import json
 
 app = Flask(__name__)
 
@@ -17,7 +18,7 @@ def home():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
-        return "Hello Boss!  <a href='/logout'>Log me out</a>"
+        return render_template('progress.html')
  
 @app.route('/login', methods=['POST'])
 def do_admin_login():
@@ -37,6 +38,24 @@ def logout():
     #logout user
     session['logged_in'] = False
     return home() 
+#receivind data to end point
+@app.route('/receive_remind', methods=['GET', 'POST'])
+def receive_remind():
+    if request.method == 'POST':
+        try:
+            #retreiving json content
+            content = request.get_json()
+            #inserting data in the table.....................
+            post_data=DbBarrier(content['dt_pick_date'],content['phone_No'],'N','')
+            db.session.add(post_data) 
+            db.session.commit()
+            return "Data is posted successfully"
+        except:   
+            return "Data is failed to be posted" 
+
+    else:
+        pass
+   
  
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)

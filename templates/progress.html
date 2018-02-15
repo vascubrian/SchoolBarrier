@@ -1,0 +1,22 @@
+<head>
+<link rel="stylesheet" href="/static/style.css" type="text/css">
+<script defer src="/static/fontawesome-all.js"></script>
+</head>
+{% block body %}
+{% if session['logged_in'] %}
+<div id="main_body">
+<h1>SCHOOL BARRIER</h1>
+<p>
+    
+ Process in progress   
+    
+</p>
+
+<p>
+    <a href="/logout">logout <span style="text-transform: lowercase">{% print session['user_name'] %}</span></a>  
+</p>    
+</div>
+{% else %}
+
+{% endif %}
+{% endblock %}
