@@ -3,7 +3,8 @@ from celery_copy import make_celery
 from os import path, environ
 from models import db,DbBarrier
 import datetime
-
+import schedule
+import time
 
 app = Flask(__name__)
 
@@ -16,13 +17,12 @@ db.init_app(app)
 
 celery = make_celery(app)
 
-@app.route('/process_sending')
+@app.route('/')
 def process():
 	
 	sendSms.delay()
-
-	return "Sending sms in progess"
-
+	
+	return "Sendings sms in progress"
 
 @celery.task(name="send_sms_flag")
 def sendSms():
