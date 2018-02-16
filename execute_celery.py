@@ -2,7 +2,6 @@ from flask import Flask
 from celery_copy import make_celery
 from os import path, environ
 from models import db,DbBarrier
-import json
 import datetime
 
 
@@ -17,44 +16,22 @@ db.init_app(app)
 
 celery = make_celery(app)
 
-@app.route('/process/<phone_no>')
-def process(phone_no):
-	#sendSms.delay(phone_no)
-
-
+@app.route('/process_sending')
+def process():
 	
-	result=DbBarrier.query.order_by(DbBarrier.dt_trans_date.desc()).limit(1)
-	if result is not None:
-		for data_value in result:
-			fmt = '%Y-%m-%d %H:%M:%S'
-			#system time
-			system_date = datetime.datetime.now()
-			#db time
-			check_date=data_value.tm_realtime
-			print check_date 
-			print "--"
-			print type(check_date)
-			print system_date 
-			print "--"
-			print type(system_date)
-			#p = system_date - check_date
+	sendSms.delay()
 
-			print "nothing"
+	return "Sending sms in progess"
 
 
-
-			return "something"
-	else:
-		return "Sending sms in progess2"
-
-
-@celery.task(name="send_sms.sendSms")
+@celery.task(name="send_sms_flag")
 def sendSms():
-	
+	#getting time...................................................
+    
 
 
-	return "Test Brian"
 
+	return "Finished !!"
 
 if __name__ == "__main__":
     port = int(environ.get("PORT", 5000))
