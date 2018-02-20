@@ -21,17 +21,34 @@ celery = make_celery(app)
 def process():
 	
 	sendSms.delay()
-	
+
 	return "Sendings sms in progress"
 
 @celery.task(name="send_sms_flag")
 def sendSms():
-	#getting time...................................................
-    
+
+	#getting db_flag...................................................
+
+	barrier_data=db.session.query(DbBarrier).filter_by(dt_trans_date=str(datetime.date.today()),vc_remind='N').first()
+	if barrier_data is not None:
+	   	try:
+	   		#send sms_function
+
+	   		#update flag
+            dt_update=db.session.query(DbBarrier).filter_by(nu_trans_id =barrier_data.nu_trans_id).first()
+            dt_update.vc_remind = 'Y'
+            db.session.commit()
+
+	   		return "SMS is sent successfully !!"
+
+    	except:
+    		return "Failed to send sms"
+
+    else:
+    	pass
 
 
 
-	return "Finished !!"
 
 if __name__ == "__main__":
     port = int(environ.get("PORT", 5000))
